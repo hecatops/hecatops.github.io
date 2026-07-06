@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hecatops</title>
+<link rel="icon" href="public/icon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Raleway:ital,wght@0,100..900;1,100..900&family=Unica+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="ambient-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<canvas id="wavy-canvas"></canvas>
+<div id="cursor-glow"></div>
+<div id="cursor-dot"></div>
+<canvas id="twinkle-canvas"></canvas>
+<button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌤️</button>
+
+<!-- HERO -->
+<section id="hero" style="border-top:none; padding-top:6rem;">
+  <div class="hero-bg"></div>
+  <canvas id="waveform-canvas"></canvas>
+  <div class="inner">
+    <div class="hero-wrap">
+      <img src="public/icon.png" alt="Logo" width="96" height="96">
+      <h1 class="hero-title">Aditi<br>Manthripragada</h1>
+      <div class="hero-btns">
+        <a class="btn-primary" href="#works">See my work →</a>
+        <a class="btn-outline" href="#contact">Reach out</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="bg-alt">
+  <div class="inner">
+    <div class="reveal" style="max-width:82rem;">
+      <p class="label">// about</p>
+      <h2 class="title">My <em>Everyday</em></h2>
+      <p class="body-copy everyday-copy" style="margin-bottom:1.3rem;">Fair tidings to you, reader! I'm grateful for your visit to my internet home, so to speak. In this section, I wanted to offer an overview of the pursuits I engage in on an average day, so as to provide a glimpse into my professional self.</p>
+      <ul class="body-copy everyday-list">
+          <li>My main commitment is to take end-to-end responsibility for the piece I own in the project, ensuring I deliver easy-to-read code that is integrated with the existing application, along with clear documentation.</li>
+
+          <li>I also engage in discussions with stakeholders to review progress and to align on the product roadmap.</li>
+
+          <li>One of my favourite tasks involves working with members across teams to identify state-of-the-art models that we can leverage, deploying them with scripts in ad-hoc scenarios.</li>
+
+          <li>I take it upon myself to interact with new members and interns to understand their background, identify gaps that can inhibit their progress, and pass on the metaphorical torch of the project.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="inner">
+    <p class="label">// skills</p>
+    <h2 class="title">My <span class="muted">Stack</span></h2>
+    <div class="skills-cloud">
+      <div class="skill-group reveal">
+        <div class="skill-group-label">Languages</div>
+        <div class="skill-tags"><span class="skill-pill">Python</span><span class="skill-pill">C++</span><span class="skill-pill">JavaScript</span><span class="skill-pill">SQL</span><span class="skill-pill">R</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-label">Frameworks & Libraries</div>
+        <div class="skill-tags"><span class="skill-pill">PyTorch</span><span class="skill-pill">TensorFlow</span><span class="skill-pill">LangChain</span><span class="skill-pill">LangGraph</span><span class="skill-pill">Google ADK</span><span class="skill-pill">Transformers</span><span class="skill-pill">FastAPI</span><span class="skill-pill">Flask</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-label">AI</div>
+        <div class="skill-tags"><span class="skill-pill">Large Language Model (LLMs)</span><span class="skill-pill">Vision Language Models (VLMs)</span><span class="skill-pill">Retrieval-Augmented Generation (RAG)</span><span class="skill-pill">Diffusion Models</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-label">DevOps</div>
+        <div class="skill-tags"><span class="skill-pill">Docker</span><span class="skill-pill">Git</span><span class="skill-pill">Github Actions</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-label">Databases</div>
+        <div class="skill-tags"><span class="skill-pill">PostgreSQL</span><span class="skill-pill">MySQL</span><span class="skill-pill">MongoDB</span><span class="skill-pill">Redis</span><span class="skill-pill">ChromaDB</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-label">Tools</div>
+        <div class="skill-tags"><span class="skill-pill">Linux</span><span class="skill-pill">Bash</span><span class="skill-pill">VSCode</span><span class="skill-pill">Jupyter</span><span class="skill-pill">Postman</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="bg-alt">
+  <div class="inner">
+    <p class="label">// experience</p>
+    <h2 class="title">My <span class="muted">Journey</span></h2>
+    <div class="timeline">
+      <div class="tl-spine"></div>
+      <div class="tl-row reveal">
+        <div class="tl-left"><div class="tl-role">AI Engineer</div><div class="tl-date">June 2025 - Present</div><div class="tl-desc">
+            <p>⁍ Represented NxtGen at Cypher 2025, demonstrating enterprise AI solutions and generating interest from 20+ companies. </p><br>
+            <p>⁍ Acted as Point of Contact across six concurrent projects from November'25 to February'26.</p>
+        </div></div>
+        <div class="tl-dot"></div>
+        <div><div class="tl-company">NxtGen Cloud Technologies</div></div>
+      </div>
+      <div class="tl-row reveal">
+        <div class="tl-left"><div class="tl-company">Troogue AI</div></div>
+        <div class="tl-dot dim"></div>
+        <div><div class="tl-role">Python Developer Intern</div><div class="tl-date">March 2025 - June 2025</div><div class="tl-desc">
+          <p>⁍ Developed config-driven chatbot applications using the Factory design pattern, enabling customization across use cases.</p><br>
+          <p>⁍ Built a RAG-powered NL-to-SQL proof of concept, allowing natural language queries over large, multi-table datasets.</p>
+</div></div>
+      </div>
+      <div class="tl-row reveal">
+        <div class="tl-left"><div class="tl-role">Management Consulting Intern</div><div class="tl-date">March 2025 - May 2025</div><div class="tl-desc">
+          <p>⁍ Evaluated emerging AI technologies to support strategic decision-making and client engagements.</p><br>
+          <p>⁍ Produced technical reports and presentations, translating AI research into actionable business recommendations.</p>
+</div></div>
+        <div class="tl-dot dim"></div>
+        <div><div class="tl-company">XiPhi AI</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="works">
+  <div class="inner">
+    <p class="label">// portfolio</p>
+    <h2 class="title" style="text-align:right;">Selected <span class="muted">Projects</span></h2>
+    <div class="projects-grid" id="projectsGrid"></div>
+    <div class="pm-nav-dots" id="pmNavDots"></div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS + CERTS -->
+<section id="pubcerts" class="bg-alt">
+  <div class="inner">
+    <p class="label">// research &amp; credentials</p>
+    <h2 class="title">Publications &amp; <span class="muted">Certifications</span></h2>
+    <div class="pubcerts-grid">
+      <div>
+        <p class="label" style="margin-bottom:1.2rem;">// papers</p>
+        <div class="pub-list">
+          <div class="pub-card reveal"><span class="pub-venue">IEEE Xplore 2022</span><span class="pub-title">Cryptocurrency and Associated Bourse Analysis using Machine Learning and Knowledge Graphs</span><a href="https://ieeexplore.ieee.org/document/9696998" class="pub-link">→ ieeexplore.ieee.org/document/9696998</a></div>
+          <div class="pub-card reveal"><span class="pub-venue">Springer Link 2024</span><span class="pub-title">A novel route to energy harvesting from wasted vibrations of siever shaker using piezoelectric technology</span><a href="https://link.springer.com/article/10.1007/s10751-024-01956-4" class="pub-link">→ link.springer.com/article/10.1007/s10751-024-01956-4</a></div>
+          <div class="pub-card reveal"><span class="pub-venue">Springer Nature Link 2025</span><span class="pub-title">Processing and Microstructure Characterization of Bio-Waste Induced Closed-Cell Aluminium/SiCp Composite Foams</span><a href="https://link.springer.com/article/10.1134/S1067821224600777" class="pub-link">→ link.springer.com/article/10.1134/S1067821224600777</a></div>
+        </div>
+      </div>
+      <div>
+        <p class="label" style="margin-bottom:1.2rem;">// credentials</p>
+        <div class="certs-grid">
+          <div class="cert-card reveal"><span class="cert-emoji">🧠</span><div><div class="cert-name">TensorFlow Developer</div><div class="cert-issuer">Google · 2023</div></div></div>
+          <div class="cert-card reveal"><span class="cert-emoji">☁️</span><div><div class="cert-name">AWS ML Specialty</div><div class="cert-issuer">Amazon · 2022</div></div></div>
+          <div class="cert-card reveal"><span class="cert-emoji">🎓</span><div><div class="cert-name">CS224n NLP</div><div class="cert-issuer">Stanford · 2021</div></div></div>
+          <div class="cert-card reveal"><span class="cert-emoji">🔬</span><div><div class="cert-name">Deep Learning Specialization</div><div class="cert-issuer">Coursera · 2021</div></div></div>
+          <div class="cert-card reveal"><span class="cert-emoji">⚙️</span><div><div class="cert-name">MLOps Professional</div><div class="cert-issuer">Google Cloud · 2022</div></div></div>
+          <div class="cert-card reveal"><span class="cert-emoji">🌐</span><div><div class="cert-name">Full-Stack Web Dev</div><div class="cert-issuer">Meta · 2020</div></div></div>
+          <div class="cert-card reveal"><span class="cert-emoji">📊</span><div><div class="cert-name">Data Science Professional</div><div class="cert-issuer">IBM · 2020</div></div></div>
+          <div class="cert-card reveal"><span class="cert-emoji">🎨</span><div><div class="cert-name">Creative Coding</div><div class="cert-issuer">Kadenze · 2019</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LABS -->
+<section id="labs">
+  <div class="inner">
+    <p class="label">// experiments</p>
+    <h2 class="title">Other <span class="muted">Projects</span></h2>
+    <div class="labs-grid">
+      <div class="lab-card reveal"><div class="lab-badge" style="background:linear-gradient(135deg,#2f2235,#3f3244);">GAN</div><div><div class="lab-title">Style Transfer</div><div class="lab-desc">Real-time webcam style transfer using TF.js.</div></div><div class="lab-arrow">→</div></div>
+      <div class="lab-card reveal"><div class="lab-badge" style="background:linear-gradient(135deg,#3f3244,#60495a);">NLP</div><div><div class="lab-title">Poetry Bot</div><div class="lab-desc">Fine-tuned GPT-2 model on Haiku datasets.</div></div><div class="lab-arrow">→</div></div>
+      <div class="lab-card reveal"><div class="lab-badge" style="background:linear-gradient(135deg,#60495a,#a9aca9);">RL</div><div><div class="lab-title">Agent Sim</div><div class="lab-desc">Reinforcement learning agents playing Pong.</div></div><div class="lab-arrow">→</div></div>
+      <div class="lab-card reveal"><div class="lab-badge" style="background:linear-gradient(135deg,#a9aca9,#bfc3ba);color:#2f2235;">CV</div><div><div class="lab-title">Gesture Synth</div><div class="lab-desc">Control synthesizer params with hand gestures.</div></div><div class="lab-arrow">→</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="bg-alt">
+  <div class="inner">
+    <div class="contact-box reveal">
+      <p class="label" style="text-align:center; position:relative; z-index:1;">// get in touch</p>
+      <h2 class="title" style="text-align:center; font-size:clamp(1.8rem,4vw,2.7rem); position:relative; z-index:1;">Find Me <span class="muted">Over On</span></h2>
+      <div class="channel-rack">
+        <a href="mailto:" class="channel">
+          <span class="channel-icon">⌥</span>
+          <span class="channel-meta"><span class="channel-label">Email</span><span class="channel-sub">@hecatops</span></span>
+          <span class="channel-bars"><span></span><span></span><span></span><span></span></span>
+        </a>
+        <a href="https://linkedin.com/in/aditi-manthripragada/" class="channel">
+          <span class="channel-icon">in</span>
+          <span class="channel-meta"><span class="channel-label">LinkedIn</span><span class="channel-sub">/aditi-manthripragada</span></span>
+          <span class="channel-bars"><span></span><span></span><span></span><span></span></span>
+        </a>
+        <a href="https://linkedin.com/in/aditi-manthripragada/" class="channel">
+          <span class="channel-icon">in</span>
+          <span class="channel-meta"><span class="channel-label">GitHub</span><span class="channel-sub">/aditi-manthripragada</span></span>
+          <span class="channel-bars"><span></span><span></span><span></span><span></span></span>
+        </a>
+        <a href="https://linkedin.com/in/aditi-manthripragada/" class="channel">
+          <span class="channel-icon">in</span>
+          <span class="channel-meta"><span class="channel-label">LeetCode</span><span class="channel-sub">/aditi-manthripragada</span></span>
+          <span class="channel-bars"><span></span><span></span><span></span><span></span></span>
+        </a>
+        <a href="https://linkedin.com/in/aditi-manthripragada/" class="channel">
+          <span class="channel-icon">in</span>
+          <span class="channel-meta"><span class="channel-label">Tableau</span><span class="channel-sub">/aditi-manthripragada</span></span>
+          <span class="channel-bars"><span></span><span></span><span></span><span></span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIANO NAV -->
+<div class="piano-stage">
+  <div class="piano-scrim"></div>
+  <nav class="piano-nav">
+    <a class="piano-key active" href="#hero"       data-note="261.63"><div class="k-dot"></div><span class="k-note">C</span><span class="k-label">Home</span></a>
+    <a class="piano-key"        href="#about"      data-note="293.66"><div class="k-dot"></div><span class="k-note">D</span><span class="k-label">About</span></a>
+    <a class="piano-key"        href="#skills"     data-note="329.63"><div class="k-dot"></div><span class="k-note">E</span><span class="k-label">Skills</span></a>
+    <a class="piano-key"        href="#experience" data-note="349.23"><div class="k-dot"></div><span class="k-note">F</span><span class="k-label">Work Exp.</span></a>
+    <a class="piano-key"        href="#works"      data-note="392.00"><div class="k-dot"></div><span class="k-note">G</span><span class="k-label">Projects</span></a>
+    <a class="piano-key"        href="#pubcerts"   data-note="440.00"><div class="k-dot"></div><span class="k-note">A</span><span class="k-label">Creds</span></a>
+    <a class="piano-key"        href="#labs"       data-note="493.88"><div class="k-dot"></div><span class="k-note">B</span><span class="k-label">Experiments</span></a>
+    <a class="piano-key"        href="#contact"    data-note="523.25"><div class="k-dot"></div><span class="k-note">C²</span><span class="k-label">Contact</span></a>
+  </nav>
+</div>
+
+<!-- PROJECT MODAL — kept as a direct child of body (not inside a section)
+     on purpose: sections use position:relative + z-index:1, which forms
+     its own stacking context, so a z-index:10000 modal nested inside one
+     was still getting capped below the piano navbar's z-index:150 and
+     showing through its blur. Living at the body level fixes that. -->
+<div class="pm-screen" id="pmScreen">
+  <div class="pm-modal">
+    <div class="pm-inner">
+      <img class="pm-img" id="pmImg" src="" alt=""/>
+      <div class="pm-body">
+        <div>
+          <div class="pm-top">
+            <h3 class="pm-title" id="pmTitle"></h3>
+            <button class="pm-close" id="pmClose">✕</button>
+          </div>
+          <p class="pm-meta" id="pmMeta"></p>
+          <p class="pm-desc" id="pmDesc"></p>
+        </div>
+        <div class="pm-footer">
+          <p class="pm-stack-label">Tech stack</p>
+          <div class="pm-tags" id="pmTags"></div>
+          <a class="pm-link" id="pmLink" href="#">→ View project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

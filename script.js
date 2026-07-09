@@ -153,7 +153,7 @@ const spy = new IntersectionObserver(entries => {
 document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
 
 /* TWINKLE EASTER EGG */
-const TWINKLE_SEQ = ['#hero','#hero','#works','#works','#pubcerts','#works'];
+const TWINKLE_SEQ = ['#hero','#hero','#works','#works','#pubcerts','#pubcerts','#works'];
 let twinkleProgress = 0, twinkleTimer = null;
 function checkTwinkle(href) {
   if (href === TWINKLE_SEQ[twinkleProgress]) {

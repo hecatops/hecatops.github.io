@@ -224,7 +224,7 @@ section:first-of-type { border-top:none; }
 @media(max-width:420px) { .channel-bars { display:none; } }
 
 /* ===== PIANO NAV ===== */
-.piano-hint {position: fixed;bottom: 7rem; left: 50%; transform: translateX(-50%); z-index: 140; display: flex; gap: .7rem; align-items: center; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; color: var(--txt-dim); opacity: .32; transition: opacity .25s ease; pointer-events: none;}
+.piano-hint {position: fixed;bottom: 8rem; left: 50%; transform: translateX(-50%); z-index: 140; display: flex; gap: .7rem; align-items: center; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; color: var(--txt-dim); opacity: .32; transition: opacity .25s ease; pointer-events: none;}
 .piano-hint:hover {opacity: .7;}
 .piano-hint .notes {color: var(--green);font-weight: 600;}
 .piano-stage { position:fixed; bottom:0; left:0; width:100%; z-index:150; pointer-events:none; }

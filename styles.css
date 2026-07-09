@@ -169,6 +169,7 @@ section:first-of-type { border-top:none; }
 .labs-grid { display:grid; grid-template-columns:1fr 1fr; gap:.9rem; margin-top:2.2rem; }
 @media(max-width:640px) { .labs-grid{grid-template-columns:1fr;} }
 .lab-card { display:flex; align-items:center; gap:1.3rem; background:var(--card); border:1px solid var(--border); border-radius:.9rem; padding:1.3rem; backdrop-filter:blur(8px); transition:all .28s; }
+.lab-card-link {display: block; text-decoration: none; color: inherit;}
 .lab-card:hover { border-color:rgba(196,176,187,0.45); box-shadow:0 0 20px var(--mauve-glow); transform:translateX(4px); }
 .lab-badge { width:3.8rem; height:3.8rem; border-radius:.6rem; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:.78rem; font-weight:500; color:#fff; }
 .lab-title { font-family:var(--font-sans); font-size:1rem; color:var(--txt); }
@@ -190,9 +191,12 @@ section:first-of-type { border-top:none; }
 @media(max-width:600px) { .certs-grid{grid-template-columns:1fr;} }
 .cert-card { background:var(--card); border:1px solid var(--border); border-radius:.9rem; padding:1.2rem 1.4rem; backdrop-filter:blur(8px); transition:all .28s; display:flex; align-items:center; gap:1.2rem; }
 .cert-card:hover { border-color:var(--mauve); box-shadow:0 0 20px var(--mauve-glow); transform:translateX(4px); }
-.cert-emoji { font-size:2rem; flex-shrink:0; }
 .cert-name { font-family:var(--font-sans); font-size:1rem; color:var(--txt); }
 .cert-issuer { font-family:var(--font-mono); font-size:.68rem; color:var(--mauve-mid); margin-top:.18rem; letter-spacing:.1em; text-transform:uppercase; }
+.cert-card.featured {border: 2px solid var(--green);box-shadow: 0 0 18px rgba(34, 197, 94, 0.15);}
+.cert-card.featured .cert-name {color: var(--green);font-weight: 800;font-size: 1.08rem;}
+.cert-card.featured .cert-issuer {color: var(--txt2);font-weight: 600;}
+.cert-card.featured:hover {border-color: var(--green);box-shadow: 0 0 28px rgba(34, 197, 94, 0.3);}
 
 /* ===== CONTACT ===== */
 .contact-box { background:var(--card); border:1px solid var(--border); border-radius:1.4rem; padding:2.8rem; backdrop-filter:blur(16px); max-width:43rem; margin:0 auto; position:relative; overflow:hidden; transition:background .35s; }

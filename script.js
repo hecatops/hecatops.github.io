@@ -1,11 +1,3 @@
-/* THEME */
-const root = document.documentElement;
-const themeBtn = document.getElementById('themeBtn');
-let dark = (localStorage.getItem('aria-theme') ?? 'dark') === 'dark';
-applyTheme();
-function toggleTheme() { dark = !dark; applyTheme(); localStorage.setItem('aria-theme', dark ? 'dark' : 'light'); }
-function applyTheme()  { root.setAttribute('data-theme', dark ? 'dark' : 'light'); themeBtn.textContent = dark ? '☀️' : '🌙'; }
-
 /* CURSOR */
 const cursorDot  = document.getElementById('cursor-dot');
 const cursorGlow = document.getElementById('cursor-glow');
@@ -14,47 +6,31 @@ document.addEventListener('mousemove', e => {
   cursorDot.style.top   = cursorGlow.style.top  = e.clientY + 'px';
 });
 
-/* WAVY CANVAS */
-const wavyCanvas = document.getElementById('wavy-canvas');
-const wctx = wavyCanvas.getContext('2d');
-let wt = 0, wmx = 0, wmy = 0;
-function resizeWavy() { wavyCanvas.width = window.innerWidth; wavyCanvas.height = window.innerHeight; }
-resizeWavy();
-window.addEventListener('resize', resizeWavy);
-document.addEventListener('mousemove', e => { wmx = e.clientX / window.innerWidth; wmy = e.clientY / window.innerHeight; });
-function drawWavy() {
-  wctx.clearRect(0, 0, wavyCanvas.width, wavyCanvas.height);
-  const W = wavyCanvas.width, H = wavyCanvas.height;
-  const a = root.getAttribute('data-theme') === 'dark' ? 0.22 : 0.15;
-  const sp = 52;
-  for (let row = 0; row * sp < H + sp; row++) {
-    const baseY = row * sp;
-    wctx.beginPath();
-    for (let x = 0; x <= W; x += 2) {
-      const d = Math.sqrt(Math.pow(x/W - wmx, 2) + Math.pow(baseY/H - wmy, 2));
-      const y = baseY + Math.sin(x/90 + wt*.5 + row*.3)*6 + Math.sin(x/45 - wt*.3 + row*.5)*3 + Math.sin(d*12 - wt*1.2)*4;
-      x === 0 ? wctx.moveTo(x, y) : wctx.lineTo(x, y);
-    }
-    const t = row / (H / sp);
-    wctx.strokeStyle = `rgba(${Math.round(169+(196-169)*t)},${Math.round(172+(176-172)*t)},${Math.round(169+(187-169)*t)},${a})`;
-    wctx.lineWidth = 0.75; wctx.stroke();
-  }
-  for (let col = 0; col * sp < W + sp; col++) {
-    const baseX = col * sp;
-    wctx.beginPath();
-    for (let y = 0; y <= H; y += 2) {
-      const d = Math.sqrt(Math.pow(baseX/W - wmx, 2) + Math.pow(y/H - wmy, 2));
-      const x = baseX + Math.sin(y/90 + wt*.4 + col*.3)*6 + Math.sin(y/55 - wt*.25 + col*.4)*3 + Math.sin(d*12 - wt*1.2)*4;
-      y === 0 ? wctx.moveTo(x, y) : wctx.lineTo(x, y);
-    }
-    const t = col / (W / sp);
-    wctx.strokeStyle = `rgba(${Math.round(34+(196-34)*(1-t))},${Math.round(100+76*t)},${Math.round(94+93*t)},${a*.65})`;
-    wctx.lineWidth = 0.5; wctx.stroke();
-  }
-  wt += 0.018;
-  requestAnimationFrame(drawWavy);
+/* DOT GRID: the brighter patch follows the cursor (dots themselves are pure CSS) */
+const dotGrid = document.getElementById('dot-grid');
+document.addEventListener('mousemove', e => {
+  dotGrid.style.setProperty('--mx', e.clientX + 'px');
+  dotGrid.style.setProperty('--my', e.clientY + 'px');
+});
+
+/* HERO NAMES: shrink the type until the (longer) last name clears the logo */
+function fitHeroNames() {
+  const row = document.querySelector('.hero-names');
+  if (!row) return;
+  if (window.innerWidth <= 768) { row.style.fontSize = ''; return; }   /* stacked layout, CSS handles it */
+  const last = row.querySelector('.hero-last'), logo = row.querySelector('.hero-logo');
+  const gap = parseFloat(getComputedStyle(row).columnGap) || 24;
+  row.style.fontSize = '100px';
+  const range = document.createRange();
+  range.selectNodeContents(last);
+  const w100 = range.getBoundingClientRect().width;
+  const avail = (row.clientWidth - logo.offsetWidth) / 2 - gap;
+  const size = Math.max(32, Math.min(96, (100 * avail) / w100));
+  row.style.fontSize = size + 'px';
 }
-drawWavy();
+fitHeroNames();
+window.addEventListener('resize', fitHeroNames);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeroNames);
 
 /* HERO ORB — glows and grows the longer the cursor stays still */
 const heroCanvas = document.getElementById('waveform-canvas');
@@ -67,6 +43,8 @@ function resizeHero() {
 }
 resizeHero();
 window.addEventListener('resize', resizeHero);
+window.addEventListener('load', resizeHero);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(resizeHero);
 document.getElementById('hero').addEventListener('mousemove', e => {
   const rect = e.currentTarget.getBoundingClientRect();
   hmx = (e.clientX - rect.left) / rect.width;
@@ -153,7 +131,7 @@ const spy = new IntersectionObserver(entries => {
 document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
 
 /* TWINKLE EASTER EGG */
-const TWINKLE_SEQ = ['#hero','#hero','#works','#works','#pubcerts','#pubcerts','#works'];
+const TWINKLE_SEQ = ['#hero','#hero','#works','#works','#pubcerts','#works'];
 let twinkleProgress = 0, twinkleTimer = null;
 function checkTwinkle(href) {
   if (href === TWINKLE_SEQ[twinkleProgress]) {
@@ -202,13 +180,121 @@ function launchTwinkle() {
   })();
 }
 
+/* SLIDER (shared by My Everyday + Projects) */
+function initSlider(slider, onUpdate) {
+  const sc = slider.querySelector('.slider-scroller');
+  const track = sc.firstElementChild;
+  const bar = slider.querySelector('.slider-bar');
+  const prev = slider.querySelector('[data-dir="-1"]');
+  const next = slider.querySelector('[data-dir="1"]');
+
+  function update() {
+    const max = sc.scrollWidth - sc.clientWidth;
+    const thumb = Math.max((sc.clientWidth / sc.scrollWidth) * 100, 10);
+    const p = max > 0 ? sc.scrollLeft / max : 0;
+    bar.style.width = thumb + '%';
+    bar.style.left = p * (100 - thumb) + '%';
+    prev.disabled = sc.scrollLeft <= 2;
+    next.disabled = sc.scrollLeft >= max - 2;
+    slider.classList.toggle('no-overflow', max <= 2);
+    slider.classList.toggle('at-start', sc.scrollLeft <= 2);
+    slider.classList.toggle('at-end', sc.scrollLeft >= max - 2);
+    if (onUpdate) onUpdate(sc);
+  }
+  function step(dir) {
+    const [a, b] = track.children;
+    const w = b ? b.offsetLeft - a.offsetLeft : a.offsetWidth;
+    sc.scrollBy({ left: dir * w, behavior: 'smooth' });
+  }
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
+  sc.addEventListener('scroll', update, { passive: true });
+  new ResizeObserver(update).observe(sc);
+  new ResizeObserver(update).observe(track);
+
+  /* mouse drag-to-scroll (touch already scrolls natively) */
+  let down = false, moved = false, startX = 0, startL = 0;
+  sc.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    down = true; moved = false; startX = e.clientX; startL = sc.scrollLeft;
+  });
+  window.addEventListener('pointermove', e => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (!moved && Math.abs(dx) > 5) { moved = true; sc.classList.add('dragging'); }
+    if (moved) sc.scrollLeft = startL - dx;
+  });
+  window.addEventListener('pointerup', () => {
+    if (!down) return;
+    down = false; sc.classList.remove('dragging');
+    setTimeout(() => { moved = false; }, 0);
+  });
+  /* a drag shouldn't count as a click (e.g. opening a project) */
+  sc.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); } }, true);
+
+  update();
+  return { update };
+}
+
+/* BUBBLE WRAP (My Everyday): click to pop, click again to re-inflate */
+function playPop(rise) {
+  const ctx = getAudioCtx(), now = ctx.currentTime;
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = 'sine';
+  const f0 = rise ? 220 : 620 + Math.random() * 160, f1 = rise ? 440 : 110, dur = rise ? 0.12 : 0.07;
+  o.frequency.setValueAtTime(f0, now);
+  o.frequency.exponentialRampToValueAtTime(f1, now + dur);
+  g.gain.setValueAtTime(rise ? 0.05 : 0.16, now);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + dur + 0.03);
+  o.connect(g); g.connect(ctx.destination); o.start(now); o.stop(now + dur + 0.05);
+  if (!rise) { /* short noise crackle for the "plastic" snap */
+    const len = Math.floor(ctx.sampleRate * 0.04), buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    const n = ctx.createBufferSource(), ng = ctx.createGain();
+    n.buffer = buf; ng.gain.value = 0.10; n.connect(ng); ng.connect(ctx.destination); n.start(now);
+  }
+}
+document.querySelectorAll('.bubble').forEach(b => {
+  b.addEventListener('click', e => {
+    const r = b.getBoundingClientRect();
+    /* keyboard-triggered clicks report 0,0, so pop from the centre in that case */
+    b.style.setProperty('--px', (e.detail ? e.clientX - r.left : r.width / 2) + 'px');
+    b.style.setProperty('--py', (e.detail ? e.clientY - r.top : r.height / 2) + 'px');
+    const popped = b.classList.toggle('popped');
+    b.setAttribute('aria-pressed', popped);
+    b.classList.remove('popping', 'inflating');
+    void b.offsetWidth;
+    b.classList.add(popped ? 'popping' : 'inflating');
+    playPop(!popped);
+  });
+  b.addEventListener('animationend', e => {
+    if (e.target === b) b.classList.remove('popping', 'inflating');
+  });
+});
+
 /* PROJECT MODAL */
 const projectData = [
+  {
+    title: "GIA Bot",
+    meta: "FDE — NxtGen · 2026",
+    img: "public/gia.png",
+    desc: "<i>Internal affairs, handled.</i><br>An all-in-one assistant where employees do everything from applying for leave to resolving IT tickets, over chat or voice. Behind it sit seven specialised agents and 100+ tools, an LLM router that picks the right agent for each message, and integrations with SuccessFactors, the IT service desk and Microsoft 365.<ul><br><li><b>Built a performance review flow that is safe by design.</b> A guided chat walks employees through the review and saves each answer to SuccessFactors as a draft. The flow advances in code, so no model sits between a typed comment and the save. A web form version reuses the same save logic, and the server re-checks every request against the logged-in user's own form.</li><br><li><b>Building an IT support agent on the service desk.</b> It validates the model's pick against 300+ categories fetched from the API, checks the Microsoft Learn MCP for a fix first, and drafts an incident or work order that is filed only after the employee confirms.</li></ul>",
+    tags: ["LangGraph", "SAP SuccessFactors", "MCP", "LiveKit"],
+    link: null
+  },
+  {
+    title: "Wayfarer",
+    meta: "AI Engineer — NxtGen · 2026",
+    img: "public/wayfarer.jpg",
+    desc: "<i>Aentic flight booking platform.</i><br>I can show (book) you the world. This is an application being made in collaboration with a leading travel technology company. The goal is to create a chat-like interface to book a travel experience with ease.<ul><br><li><b>Built the first prototype solo in one week.</b> I developed the initial version for a client demo, which garnered enough interest to become the first step in the collaboration.</li><br><li><b>Reduced flight search latency from 60s to 3s.</b> The initial prototype relied on the LLM to reason over every travel option on each request, making searches painfully slow. I replaced that approach with a structured natural-language-to-SQL layer backed by Pandas DataFrames, increasing results from 10 to 40+ options per query.</li><br><li><b>Improved reliability with agent validation.</b> I proposed a multi-node architecture, adding a validation agent to the guardrailing process to account for typos and other oversights.</li></ul>",
+    tags: ["Agentic AI", "Live APIs", "FastAPI", "React"],
+    link: null
+  },
   {
     title: "Spiel",
     meta: "Personal Project · 2025",
     img: "public/spiel.png",
-    desc: "<i>An AI-powered choose-your own adventure.</i><br>All Oregon Trails lead to Rome? Not really. But they could, in the world you make in Spiel, where every adventure is generated from a prompt.<ul><br><li><b>A planning agent keeps the story coherent.</b> The goal was to come up with a short story generation game. But I noticed abrupt endings when I tried to impose that as a rule. To overcome this, I created a planning agent to map out how the story might flow. Using this plan, the execution agent comes up with story and options. If the course of the story varies significantly, the plan is updated.</li><br><li><b>Reliability was a major focus.</b> I implemented server-owned sessions, defensive validation around LLM responses, and graceful fallbacks to ensure the game keeps running even when the model doesn't behave perfectly.</li></ul>",
+    desc: "<i>AI-powered choose-your own adventure.</i><br>All Oregon Trails lead to Rome? Not really. But they could, in the world you make in Spiel, where every adventure is generated from a prompt.<ul><br><li><b>A planning agent keeps the story coherent.</b> The goal was to come up with a short story generation game. But I noticed abrupt endings when I tried to impose that as a rule. To overcome this, I created a planning agent to map out how the story might flow. Using this plan, the execution agent comes up with story and options. If the course of the story varies significantly, the plan is updated.</li><br><li><b>Reliability was a major focus.</b> I implemented server-owned sessions, defensive validation around LLM responses, and graceful fallbacks to ensure the game keeps running even when the model doesn't behave perfectly.</li></ul>",
     tags: ["FastAPI", "React", "LLM", "Planning Agent"],
     link: "https://spieltoo.vercel.app"
   },
@@ -216,44 +302,47 @@ const projectData = [
     title: "DecorAI",
     meta: "AI Engineer — NxtGen · 2025",
     img: "public/paint.png",
-    desc: "<i>An AI tool for visualizing new interiors inside your home.</i><br>This is the application where you paint and don't watch it dry. This proof of concept was developed for a hardware client to help customers visualize shades from the client's catalogue within photographs of their homes in vivid detail.<ul><br><li><b>Built the complete image generation pipeline.</b> I combined SAM2, OpenCV, Pillow, and Qwen Image Edit into a single workflow for segmentation, masking, and diffusion.</li><br><li><b>Made prompts adapt to every image.</b> Through extensive experimentation with prompting strategies and diffusion parameters, I found that no static prompt worked consistently across different interiors. I introduced VLM-generated prompts tailored to each image.</li><br><li><b>Delivered the production demo.</b> I assembled the final interior and exterior pipelines, integrated the application, and presented it at an AI conference, attracting interest from more than 30 companies.</li></ul>",
+    desc: "<i>AI tool for visualizing new interiors inside your home.</i><br>This is the application where you paint and don't watch it dry. This proof of concept was developed for a hardware client to help customers visualize shades from the client's catalogue within photographs of their homes in vivid detail.<ul><br><li><b>Built the complete image generation pipeline.</b> I combined SAM2, OpenCV, Pillow, and Qwen Image Edit into a single workflow for segmentation, masking, and diffusion.</li><br><li><b>Made prompts adapt to every image.</b> Through extensive experimentation with prompting strategies and diffusion parameters, I found that no static prompt worked consistently across different interiors. I introduced VLM-generated prompts tailored to each image.</li><br><li><b>Delivered the production demo.</b> I assembled the final interior and exterior pipelines, integrated the application, and presented it at an AI conference, attracting interest from more than 30 companies.</li></ul>",
     tags: ["Diffusion", "Segmentation", "OpenCV", "VLM", "PyTorch"],
     link: null
   },
-  {
-    title: "Wayfarer",
-    meta: "AI Engineer — NxtGen · 2026",
-    img: "public/wayfarer.jpg",
-    desc: "<i>An agentic flight booking platform.</i><br>I can show (book) you the world. This is an application being made in collaboration with a leading travel technology company. The goal is to create a chat-like interface to book a travel experience with ease.<ul><br><li><b>Built the first prototype solo in one week.</b> I developed the initial version for a client demo, which garnered enough interest to become the first step in the collaboration.</li><br><li><b>Reduced flight search latency from 60s to 3s.</b> The initial prototype relied on the LLM to reason over every travel option on each request, making searches painfully slow. I replaced that approach with a structured natural-language-to-SQL layer backed by Pandas DataFrames, increasing results from 10 to 40+ options per query.</li><br><li><b>Improved reliability with agent validation.</b> I proposed a multi-node architecture, adding a validation agent to the guardrailing process to account for typos and other oversights.</li></ul>",
-    tags: ["Agentic AI", "Live APIs", "FastAPI", "React"],
-    link: null
-  }
 ];
 
-const pgGrid  = document.getElementById('projectsGrid');
-const pmScreen = document.getElementById('pmScreen');
-const pmNavDots = document.getElementById('pmNavDots');
+const projTrack = document.getElementById('projectsTrack');
+const pmScreen  = document.getElementById('pmScreen');
 
 projectData.forEach((p, i) => {
-  const card = document.createElement('div');
-  card.className = 'project-card reveal';
-  card.innerHTML = `
-    <div class="card-img-wrap"><img class="card-img" src="${p.img}" alt="${p.title}"/></div>
-    <div class="card-body">
-      <h3 class="card-title">${p.title}</h3>
-      <p class="card-desc">${p.desc.split('.')[0]}.</p>
-      <div class="card-tags">${p.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-      <p class="card-click-hint">CLICK TO EXPLORE →</p>
+  const slide = document.createElement('div');
+  slide.className = 'proj-slide';
+  slide.innerHTML = `
+    <div class="project-card" style="--i:${i}" tabindex="0" role="button" aria-label="Open ${p.title}">
+      <div class="card-img-wrap"><img class="card-img" src="${p.img}" alt="${p.title}"/></div>
+      <div class="card-body">
+        <h3 class="card-title">${p.title}</h3>
+        <p class="card-desc">${p.desc.split('.')[0]}.</p>
+        <div class="card-tags">${p.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <p class="card-click-hint">CLICK TO EXPLORE →</p>
+      </div>
     </div>`;
+  const card = slide.firstElementChild;
   card.addEventListener('click', () => openProjectModal(i));
-  pgGrid.appendChild(card);
-  revealObs.observe(card);
-
-  const dot = document.createElement('div');
-  dot.className = 'pm-dot';
-  dot.addEventListener('click', () => openProjectModal(i));
-  pmNavDots.appendChild(dot);
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProjectModal(i); }
+  });
+  projTrack.appendChild(slide);
 });
+
+/* subtle depth: cards drift slightly smaller and softer the further they are from the centre */
+function projectDepth(sc) {
+  const box = sc.getBoundingClientRect(), mid = box.left + box.width / 2;
+  sc.querySelectorAll('.proj-slide').forEach(s => {
+    const r = s.getBoundingClientRect();
+    const d = Math.min(1, Math.abs(r.left + r.width / 2 - mid) / (box.width * 0.6));
+    s.style.transform = `scale(${1 - 0.05 * d})`;
+    s.style.opacity = 1 - 0.3 * d;
+  });
+}
+initSlider(document.getElementById('projSlider'), projectDepth);
 
 function openProjectModal(i) {
   const p = projectData[i];
@@ -272,14 +361,12 @@ function openProjectModal(i) {
   }
   pmScreen.style.display = 'flex';
   document.body.style.overflow = "hidden";
-  document.querySelectorAll('.pm-dot').forEach((d,j) => d.classList.toggle('active', j===i));
   pmScreen.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function closeProjectModal() {
   pmScreen.style.display = 'none';
   document.body.style.overflow = "";
-  document.querySelectorAll('.pm-dot').forEach(d => d.classList.remove('active'));
 }
 
 document.getElementById('pmClose').addEventListener('click', closeProjectModal);

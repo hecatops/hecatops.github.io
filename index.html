@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Hecatops</title>
 <link rel="icon" href="public/icon.png"/>
-<link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Raleway:ital,wght@0,100..900;1,100..900&family=Unica+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Raleway:ital,wght@0,100..900;1,100..900&family=Unica+One&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,23 +16,30 @@
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 </div>
-<canvas id="wavy-canvas"></canvas>
+<div id="dot-grid"></div>
 <div id="cursor-glow"></div>
 <div id="cursor-dot"></div>
 <canvas id="twinkle-canvas"></canvas>
-<button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌤️</button>
 
 <!-- HERO -->
-<section id="hero" style="border-top:none; padding-top:6rem;">
+<section id="hero">
   <div class="hero-bg"></div>
   <canvas id="waveform-canvas"></canvas>
   <div class="inner">
     <div class="hero-wrap">
-      <img src="public/icon.png" alt="Logo" width="96" height="96">
-      <h1 class="hero-title">Aditi<br>Manthripragada</h1>
+      <h1 class="hero-names">
+        <span class="hero-first">Aditi</span>
+        <img class="hero-logo" src="public/icon.png" alt="" width="96" height="96">
+        <span class="hero-last">Manthripragada</span>
+      </h1>
+      <div class="hero-rule"></div>
+      <div class="hero-meta">
+        <span>Forward Deployed Engineer</span>
+        <span>Building reliable applications, reliably</span>
+      </div>
       <div class="hero-btns">
-        <a class="btn-primary" href="#works">See my work →</a>
-        <a class="btn-outline" href="#contact">Reach out</a>
+        <a class="btn-primary" href="#works"><span>See my work</span></a>
+        <a class="btn-outline" href="#contact"><span>Reach out</span><span aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
@@ -43,18 +50,16 @@
   <div class="inner">
     <div class="reveal" style="max-width:82rem;">
       <p class="label">// about</p>
-      <h2 class="title">My <em>Everyday</em></h2>
-      <p class="body-copy everyday-copy" style="margin-bottom:1.3rem;">Fair tidings to you, reader! I'm grateful for your visit to my internet home, so to speak. In this section, I wanted to offer an overview of the pursuits I engage in on an average day, so as to provide a glimpse into my professional self.</p>
-      <ul class="body-copy everyday-list">
-          <li>My main commitment is to take end-to-end responsibility for the piece I own in the project, ensuring I deliver easy-to-read code that is integrated with the existing application, along with clear documentation.</li>
-
-          <li>I also engage in discussions with stakeholders to review progress and to align on the product roadmap.</li>
-
-          <li>One of my favourite tasks involves collaborating with colleagues across teams to evaluate emerging models, understand the trade-offs they present, and determine how they can best be integrated into our products.</li>
-
-          <li>I take it upon myself to interact with new members and interns to understand their background, identify gaps that can inhibit their progress, and pass on the metaphorical torch of the project.</li>
-      </ul>
+      <h2 class="title">My <em>Highlights</em></h2>
+      <p class="body-copy everyday-copy">Fair tidings to you, reader! I'm grateful for your visit to my internet home, so to speak. To start off, I wanted to share things that are highlights of my journey so far.</p>
     </div>
+    <div class="bubble-wrap reveal" id="bubbleWrap">
+      <button class="bubble" type="button" aria-pressed="false"><span class="bubble-head">Joined a client project midway and launched in 3 weeks</span><span class="bubble-story"><span>I joined a client project six months after it started. After a 3-day KT, I began working as the FDE, discussing requirements directly with the client and earning their confidence through the main launch, three weeks after I joined.</span></span></button>
+      <button class="bubble" type="button" aria-pressed="false"><span class="bubble-head">Cut flight search latency from 60s to 3s</span><span class="bubble-story"><span>I re-architected the LLM-based flight search pipeline, bringing end-to-end latency down from 60s to 3s and scaling results from 10 to 40+ per query. This was done with a structured natural language to SQL layer using FastAPI and Pandas DataFrames.</span></span></button>
+      <button class="bubble" type="button" aria-pressed="false"><span class="bubble-head">Represented NxtGen at Cypher 2025</span><span class="bubble-story"><span>I demonstrated enterprise AI solutions at Cypher 2025, which generated interest from 20+ companies.</span></span></button>
+      <button class="bubble" type="button" aria-pressed="false"><span class="bubble-head">Built a modular chatbot system</span><span class="bubble-story"><span>At Troogue AI, I built a modular chatbot system using configurable prompt templates to simulate multiple perspectives, improving the quality and diversity of generated organizational insights.</span></span></button>
+    </div>
+    <p class="bubble-hint">// click to expand</p>
   </div>
 </section>
 
@@ -100,10 +105,20 @@
     <div class="timeline">
       <div class="tl-spine"></div>
       <div class="tl-row reveal">
-        <div class="tl-left"><div class="tl-role">AI Engineer</div><div class="tl-date">June 2025 - Present</div><div class="tl-desc">
-            <p>⁍ Represented NxtGen at Cypher 2025, demonstrating enterprise AI solutions and generating interest from 20+ companies. </p><br>
-            <p>⁍ Acted as Point of Contact across six concurrent projects from November'25 to February'26.</p>
-        </div></div>
+        <div class="tl-left">
+          <div class="tl-role-block">
+            <div class="tl-role">Forward Deployed Engineer</div><div class="tl-date">Sept 2026 - Present</div><div class="tl-desc">
+              <p>⁍ Lead daily client updates and requirements discussions, maintaining five trackers shared with the client and internal team.</p>
+              <p>⁍ Sorting issues as they are raised, identifying root cause and fixing it or routing it to the right member with relevant context.</p>
+            </div>
+          </div>
+          <div class="tl-role-block">
+            <div class="tl-role">AI Engineer</div><div class="tl-date">June 2025 - Sept 2026</div><div class="tl-desc">
+              <p>⁍ Built and shipped AI prototypes for enterprise clients, including DecorAI and Wayfarer.</p>
+              <p>⁍ Acted as Point of Contact across six concurrent projects from November'25 to February'26.</p>
+            </div>
+          </div>
+        </div>
         <div class="tl-dot"></div>
         <div><div class="tl-company">NxtGen Cloud Technologies</div></div>
       </div>
@@ -111,13 +126,13 @@
         <div class="tl-left"><div class="tl-company">Troogue AI</div></div>
         <div class="tl-dot dim"></div>
         <div><div class="tl-role">Python Developer Intern</div><div class="tl-date">March 2025 - June 2025</div><div class="tl-desc">
-          <p>⁍ Developed config-driven chatbot applications using the Factory design pattern, enabling customization across use cases.</p><br>
+          <p>⁍ Reviewed and debugged AI-generated code line by line before using it, building the habit of understanding every piece.</p>
           <p>⁍ Built a RAG-powered NL-to-SQL proof of concept, allowing natural language queries over large, multi-table datasets.</p>
 </div></div>
       </div>
       <div class="tl-row reveal">
         <div class="tl-left"><div class="tl-role">Management Consulting Intern</div><div class="tl-date">March 2025 - May 2025</div><div class="tl-desc">
-          <p>⁍ Evaluated emerging AI technologies to support strategic decision-making and client engagements.</p><br>
+          <p>⁍ Evaluated emerging AI technologies to support strategic decision-making and client engagements.</p>
           <p>⁍ Produced technical reports and presentations, translating AI research into actionable business recommendations.</p>
 </div></div>
         <div class="tl-dot dim"></div>
@@ -132,8 +147,16 @@
   <div class="inner">
     <p class="label">// portfolio</p>
     <h2 class="title" style="text-align:right;">My Favourite <span class="muted">Projects</span></h2>
-    <div class="projects-grid" id="projectsGrid"></div>
-    <div class="pm-nav-dots" id="pmNavDots"></div>
+    <div class="slider proj-slider reveal" id="projSlider">
+      <div class="slider-scroller" tabindex="0" aria-label="Projects">
+        <div class="proj-track" id="projectsTrack"></div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" data-dir="-1" aria-label="Previous project">←</button>
+        <div class="slider-progress"><span class="slider-bar"></span></div>
+        <button class="slider-btn" data-dir="1" aria-label="Next project">→</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -171,7 +194,7 @@
           <div class="cert-card reveal"><div><div class="cert-name">SQL (Advanced)</div><div class="cert-issuer">HackerRank · 2024</div></div></div>
           <div class="cert-card reveal"><div><div class="cert-name">GitHub Foundations</div><div class="cert-issuer">GitHub · 2024</div></div></div>
           <div class="cert-card reveal"><div><div class="cert-name">Data Scientist</div><div class="cert-issuer">DataCamp · 2024</div></div></div>
-          <div class="cert-card reveal"><div><div class="cert-name">Japanese Language</div><div class="cert-issuer">JLPT · 2025</div></div></div>
+          <div class="cert-card reveal"><div><div class="cert-name">Japanese Language N3</div><div class="cert-issuer">JLPT · 2025</div></div></div>
         </div>
       </div>
     </div>
@@ -279,19 +302,15 @@
 
 <!-- PIANO NAV -->
 <div class="piano-stage">
-  <div class="piano-hint">
-    <span>♪</span>
-    <span class="notes">CC GG AA G</span>
-  </div>
   <div class="piano-scrim"></div>
   <nav class="piano-nav">
     <a class="piano-key active" href="#hero"       data-note="261.63"><div class="k-dot"></div><span class="k-note">C</span><span class="k-label">Home</span></a>
     <a class="piano-key"        href="#about"      data-note="293.66"><div class="k-dot"></div><span class="k-note">D</span><span class="k-label">About</span></a>
     <a class="piano-key"        href="#skills"     data-note="329.63"><div class="k-dot"></div><span class="k-note">E</span><span class="k-label">Skills</span></a>
-    <a class="piano-key"        href="#experience" data-note="349.23"><div class="k-dot"></div><span class="k-note">F</span><span class="k-label">Work</span></a>
+    <a class="piano-key"        href="#experience" data-note="349.23"><div class="k-dot"></div><span class="k-note">F</span><span class="k-label">Work Exp.</span></a>
     <a class="piano-key"        href="#works"      data-note="392.00"><div class="k-dot"></div><span class="k-note">G</span><span class="k-label">Projects</span></a>
-    <a class="piano-key"        href="#pubcerts"   data-note="440.00"><div class="k-dot"></div><span class="k-note">A</span><span class="k-label">Assets</span></a>
-    <a class="piano-key"        href="#labs"       data-note="493.88"><div class="k-dot"></div><span class="k-note">B</span><span class="k-label">Minis</span></a>
+    <a class="piano-key"        href="#pubcerts"   data-note="440.00"><div class="k-dot"></div><span class="k-note">A</span><span class="k-label">Creds</span></a>
+    <a class="piano-key"        href="#labs"       data-note="493.88"><div class="k-dot"></div><span class="k-note">B</span><span class="k-label">More</span></a>
     <a class="piano-key"        href="#contact"    data-note="523.25"><div class="k-dot"></div><span class="k-note">C²</span><span class="k-label">Contact</span></a>
   </nav>
 </div>
@@ -304,7 +323,7 @@
 <div class="pm-screen" id="pmScreen">
   <div class="pm-modal">
     <div class="pm-inner">
-      <img class="pm-img" id="pmImg" src="" alt=""/>
+      <div class="pm-img-wrap"><img class="pm-img" id="pmImg" src="" alt=""/></div>
       <div class="pm-body">
         <div>
           <div class="pm-top">
